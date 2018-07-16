@@ -40,7 +40,7 @@ Admin.Search = (function () {
 
             enumerate(function (item) {
 
-                var rate = 0;
+                var rate = 50;
                 var missKeyword = false;
 
                 if (substrRegex.test(item.title)) {
@@ -55,13 +55,16 @@ Admin.Search = (function () {
                     missKeyword = true;
                 }
 
+                if (item.parent === 'Plugins') {
+                    rate = -50;
+                }
+
                 item.rate = rate;
 
                 if (!missKeyword) {
                     matches.push(item);
                 }
             });
-
 
             matches.sort(byRateAndTitle);
             cb(matches);
