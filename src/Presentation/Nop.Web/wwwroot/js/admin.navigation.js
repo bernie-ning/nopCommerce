@@ -62,7 +62,7 @@ Admin.Navigation = (function () {
         });
 
         for (i = 0; i < result.length; i++) {
-            map[result[i].systemName] = result[i];
+            map[result[i].link] = result[i];
         }
     };
     var events = {};

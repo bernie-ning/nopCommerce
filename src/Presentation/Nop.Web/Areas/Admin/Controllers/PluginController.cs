@@ -132,26 +132,17 @@ namespace Nop.Web.Areas.Admin.Controllers
 
             //prepare model
             var model = _pluginModelFactory.PreparePluginListModel(
-                new PluginSearchModel() { PageSize = int.MaxValue });
-
-
-            var filtredNames = model.Data
-               .GroupBy(g => g.FriendlyName)
-               .Select(g => new { Value = g.Key, Count = g.Count() })
-               .Where(t => t.Count > 1)
-               .Select(x => x.Value)
-               .ToList();
+                new PluginSearchModel { PageSize = int.MaxValue });
 
             var filtredPlugins = model.Data
                 .Where(m => !string.IsNullOrEmpty(m.ConfigurationUrl))
-                .OrderBy(m => m.FriendlyName)
                 .Select(m => new
                 {
-                    title = m.FriendlyName + ((filtredNames.Contains(m.FriendlyName)) ? "(" + m.SystemName.Split('.')[1] + ")" : ""),
+                    title = m.FriendlyName,
                     link = m.ConfigurationUrl,
                     parent = "Plugins",
                     grandParent = "",
-                    systemName = m.SystemName
+                    rate = 1
                 })
                 .ToList();
 
